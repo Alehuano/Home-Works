@@ -29,13 +29,15 @@ class UrTube:
         for user in self.users:
             if user.nickname == nickname and user.password == hash(password):
                 self.current_user = user
+                return True
+        return False
 
     def register(self, nickname, password, age):
-        new_user = User(nickname, password, age)
         for user in self.users:
             if user.nickname == nickname:
                 print(f"Пользователь {nickname} уже существует.")
                 return
+        new_user = User(nickname, password, age)
         self.users.append(new_user)
         self.current_user = new_user
         # print(self.current_user)
@@ -44,9 +46,11 @@ class UrTube:
         self.current_user = None
 
     def add(self, *videos):
-        for video in videos:
-            if video not in self.videos:
-                self.videos.append(video)
+        for i in videos:
+            if i.title not in self.videos:
+                self.videos.append(i)
+        print(i.title) #для проверки
+        print(str(self.videos)) #для проверки
 
     def get_videos(self, search_word):
         return [video.title for video in self.videos if search_word.lower() in video.title.lower()]
@@ -71,13 +75,17 @@ class UrTube:
 ur = UrTube()
 v1 = Video('Лучший язык программирования 2024 года', 200)
 v2 = Video('Для чего девушкам парень программист?', 10, adult_mode=True)
+v3 = Video('Тестовое видео', 50) #это строка для проверки наличия видео с повторяющимся названием
+v4 = Video('Тестовое видео', 50) #это строка для проверки наличия видео с повторяющимся названием
+
 
 # Добавление видео
-ur.add(v1, v2)
+ur.add(v1, v2, v3, v4)
 
 # Проверка поиска
 print(ur.get_videos('лучший'))
 print(ur.get_videos('ПРОГ'))
+print(ur.get_videos('тест'))
 
 # Проверка на вход пользователя и возрастное ограничение
 ur.watch_video('Для чего девушкам парень программист?')
