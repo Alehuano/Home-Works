@@ -47,10 +47,10 @@ class UrTube:
 
     def add(self, *videos):
         for i in videos:
-            if i.title not in self.videos:
+            if i.title not in [v.title for v in self.videos]:
                 self.videos.append(i)
-        print(i.title) #для проверки
-        print(str(self.videos)) #для проверки
+        # print(i.title) #для проверки
+        # print(str(self.videos)) #для проверки
 
     def get_videos(self, search_word):
         return [video.title for video in self.videos if search_word.lower() in video.title.lower()]
@@ -67,6 +67,7 @@ class UrTube:
                     return
 
                 for y in range(video.time_now + 1, video.duration + 1):
+                    video.time_now += 1
                     print(y, end=' ')
                     time.sleep(0.5)
                 print("Конец видео")
@@ -75,17 +76,17 @@ class UrTube:
 ur = UrTube()
 v1 = Video('Лучший язык программирования 2024 года', 200)
 v2 = Video('Для чего девушкам парень программист?', 10, adult_mode=True)
-v3 = Video('Тестовое видео', 50) #это строка для проверки наличия видео с повторяющимся названием
-v4 = Video('Тестовое видео', 50) #это строка для проверки наличия видео с повторяющимся названием
+# v3 = Video('Тестовое видео', 50) #это строка для проверки наличия видео с повторяющимся названием
+# v4 = Video('Тестовое видео', 50) #это строка для проверки наличия видео с повторяющимся названием
 
 
 # Добавление видео
-ur.add(v1, v2, v3, v4)
+ur.add(v1, v2)
 
 # Проверка поиска
 print(ur.get_videos('лучший'))
 print(ur.get_videos('ПРОГ'))
-print(ur.get_videos('тест'))
+# print(ur.get_videos('тест'))
 
 # Проверка на вход пользователя и возрастное ограничение
 ur.watch_video('Для чего девушкам парень программист?')
