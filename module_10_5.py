@@ -23,11 +23,11 @@ if __name__ == '__main__':
     print(f'Время работы линейного алгоритма {interval_1}')
 
 if __name__ == '__main__':
+    start = datetime.now()
     with multiprocessing.Pool(processes=4) as pool:
-        start = datetime.now()
         pool.map(read_info, filenames)
-        stop = datetime.now()
-        interval_2 = stop - start
+    stop = datetime.now()
+    interval_2 = stop - start
     print(f'Время работы многопроцессного алгоритма {interval_2}')
 
     print(f'Скорость вычисления с помощью многопроцессного в {round(interval_1 / interval_2,2)} раз выше,' + '\n'
